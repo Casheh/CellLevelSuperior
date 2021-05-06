@@ -1,0 +1,9 @@
+name: CellLevel
+version: ${project.version}
+main: net.casheh.celllevel.CellLevel
+authors: [ Casheh ]
+depend: [SuperiorSkyblock2]
+commands:
+  levels:
+    aliases: [value, level]
+  deposit:
