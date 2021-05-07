@@ -1,5 +1,8 @@
 package net.casheh.celllevel;
 
+import fr.minuskube.inv.InventoryManager;
+import fr.minuskube.inv.SmartInventory;
+import fr.minuskube.inv.SmartInvsPlugin;
 import net.casheh.celllevel.commands.Deposit;
 import net.casheh.celllevel.commands.Levels;
 import net.casheh.celllevel.config.Config;

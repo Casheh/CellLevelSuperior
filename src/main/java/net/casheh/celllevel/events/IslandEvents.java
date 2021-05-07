@@ -1,10 +1,10 @@
 package net.casheh.celllevel.events;
 
+import com.bgsoftware.superiorskyblock.api.events.IslandBanEvent;
 import com.bgsoftware.superiorskyblock.api.events.IslandDisbandEvent;
 import com.bgsoftware.superiorskyblock.api.events.IslandKickEvent;
 import com.bgsoftware.superiorskyblock.api.events.IslandQuitEvent;
 import com.bgsoftware.superiorskyblock.api.wrappers.SuperiorPlayer;
-import com.google.common.collect.Table;
 import net.casheh.celllevel.CellLevel;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -25,20 +25,7 @@ public class IslandEvents implements Listener {
 
     @EventHandler
     public void onLeave(IslandQuitEvent e) {
-        UUID uuid = e.getPlayer().getUniqueId();
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String query = "DELETE FROM players WHERE uuid=?";
-                    PreparedStatement statement = plugin.getDatabase().prepare(query);
-                    statement.setString(1, uuid.toString());
-                    statement.executeUpdate();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+        deletePlayer(e.getPlayer().getUniqueId());
     }
 
     @EventHandler
@@ -69,7 +56,17 @@ public class IslandEvents implements Listener {
 
     @EventHandler
     public void onKick(IslandKickEvent e) {
-        UUID uuid = e.getTarget().getUniqueId();
+        deletePlayer(e.getTarget().getUniqueId());
+    }
+
+    @EventHandler
+    public void onBan(IslandBanEvent e) {
+        if (e.getIsland().equals(e.getTarget().getIsland())) {
+            deletePlayer(e.getTarget().getUniqueId());
+        }
+    }
+
+    private void deletePlayer(UUID uuid) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
