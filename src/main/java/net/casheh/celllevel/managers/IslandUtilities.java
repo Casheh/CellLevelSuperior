@@ -68,69 +68,79 @@ public class IslandUtilities {
     }
 
     public void setBeacons(int amount) {
-        UUID islandId = this.island.getUniqueId();
-        try {
+        Bukkit.getScheduler().runTaskAsynchronously(CellLevel.inst, new Runnable() {
+            @Override
+            public void run() {
+                UUID islandId = island.getUniqueId();
+                try {
 
-            String query = "SELECT * FROM virtual WHERE islandId=?";
-            PreparedStatement statement = CellLevel.inst.getDatabase().prepare(query);
-            statement.setString(1, islandId.toString());
-            ResultSet rs = statement.executeQuery();
+                    String query = "SELECT * FROM virtual WHERE islandId=?";
+                    PreparedStatement statement = CellLevel.inst.getDatabase().prepare(query);
+                    statement.setString(1, islandId.toString());
+                    ResultSet rs = statement.executeQuery();
 
-            if (rs.next()) {
+                    if (rs.next()) {
 
-                query = "UPDATE virtual SET beacons=? WHERE islandId=?";
-                PreparedStatement update = CellLevel.inst.getDatabase().prepare(query);
-                update.setInt(1, amount);
-                update.setString(2, islandId.toString());
-                update.executeUpdate();
+                        query = "UPDATE virtual SET beacons=? WHERE islandId=?";
+                        PreparedStatement update = CellLevel.inst.getDatabase().prepare(query);
+                        update.setInt(1, amount);
+                        update.setString(2, islandId.toString());
+                        update.executeUpdate();
 
-            } else {
+                    } else {
 
-                query = "INSERT INTO virtual (islandId, beacons, sponge) VALUES (?,?,?)";
-                PreparedStatement insert = CellLevel.inst.getDatabase().prepare(query);
-                insert.setString(1, islandId.toString());
-                insert.setInt(2, amount);
-                insert.setInt(3, 0);
-                insert.executeUpdate();
+                        query = "INSERT INTO virtual (islandId, beacons, sponge) VALUES (?,?,?)";
+                        PreparedStatement insert = CellLevel.inst.getDatabase().prepare(query);
+                        insert.setString(1, islandId.toString());
+                        insert.setInt(2, amount);
+                        insert.setInt(3, 0);
+                        insert.executeUpdate();
 
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        });
     }
 
     public void setSponge(int amount) {
-        UUID islandId = this.island.getUniqueId();
-        try {
+       Bukkit.getScheduler().runTaskAsynchronously(CellLevel.inst, new Runnable() {
+           @Override
+           public void run() {
+               UUID islandId = island.getUniqueId();
+               try {
 
-            String query = "SELECT * FROM virtual WHERE islandId=?";
-            PreparedStatement statement = CellLevel.inst.getDatabase().prepare(query);
-            statement.setString(1, islandId.toString());
-            ResultSet rs = statement.executeQuery();
+                   String query = "SELECT * FROM virtual WHERE islandId=?";
+                   PreparedStatement statement = CellLevel.inst.getDatabase().prepare(query);
+                   statement.setString(1, islandId.toString());
+                   ResultSet rs = statement.executeQuery();
 
-            if (rs.next()) {
+                   if (rs.next()) {
 
-                query = "UPDATE virtual SET sponge=? WHERE islandId=?";
-                PreparedStatement update = CellLevel.inst.getDatabase().prepare(query);
-                update.setInt(1, amount);
-                update.setString(2, islandId.toString());
-                update.executeUpdate();
+                       query = "UPDATE virtual SET sponge=? WHERE islandId=?";
+                       PreparedStatement update = CellLevel.inst.getDatabase().prepare(query);
+                       update.setInt(1, amount);
+                       update.setString(2, islandId.toString());
+                       update.executeUpdate();
 
-            } else {
+                   } else {
 
-                query = "INSERT INTO virtual (islandId, beacons, sponge) VALUES (?,?,?)";
-                PreparedStatement insert = CellLevel.inst.getDatabase().prepare(query);
-                insert.setString(1, islandId.toString());
-                insert.setInt(2, 0);
-                insert.setInt(3, amount);
-                insert.executeUpdate();
+                       query = "INSERT INTO virtual (islandId, beacons, sponge) VALUES (?,?,?)";
+                       PreparedStatement insert = CellLevel.inst.getDatabase().prepare(query);
+                       insert.setString(1, islandId.toString());
+                       insert.setInt(2, 0);
+                       insert.setInt(3, amount);
+                       insert.executeUpdate();
 
-            }
+                   }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+               } catch (SQLException e) {
+                   e.printStackTrace();
+               }
+           }
+       });
     }
 
     public List<String> getLevelsList() {
