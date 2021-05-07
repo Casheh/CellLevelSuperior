@@ -2,7 +2,6 @@ package net.casheh.celllevel;
 
 import net.casheh.celllevel.commands.Deposit;
 import net.casheh.celllevel.commands.Levels;
-import net.casheh.celllevel.commands.TestCommand;
 import net.casheh.celllevel.config.Config;
 import net.casheh.celllevel.db.Database;
 import net.casheh.celllevel.db.SQLite;
@@ -45,8 +44,6 @@ public final class CellLevel extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new IslandEvents(this), this);
             getCommand("levels").setExecutor(new Levels(this));
             getCommand("deposit").setExecutor(new Deposit());
-
-            getCommand("inv").setExecutor(new TestCommand());
         }
 
     }

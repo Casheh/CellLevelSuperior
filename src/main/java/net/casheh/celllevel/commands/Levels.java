@@ -3,7 +3,9 @@ package net.casheh.celllevel.commands;
 import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
 import com.bgsoftware.superiorskyblock.api.island.Island;
 import net.casheh.celllevel.CellLevel;
+import net.casheh.celllevel.inventory.BeaconWithdrawal;
 import net.casheh.celllevel.inventory.LevelsMenu;
+import net.casheh.celllevel.inventory.SpongeWithdrawal;
 import net.casheh.celllevel.managers.IslandUtilities;
 import net.casheh.celllevel.managers.PlayerUtilities;
 import net.casheh.celllevel.util.Util;
@@ -157,43 +159,16 @@ public class Levels implements CommandExecutor {
 
             Player player = (Player) sender;
 
-            if (SuperiorSkyblockAPI.getPlayer(player).getIsland() == null) {
-                sender.sendMessage(CellLevel.inst.getCfg().getPrefix() + Util.color("&cYou are not in a cell."));
-                return false;
-            }
-
-            if (args.length < 3) {
-                sender.sendMessage(CellLevel.inst.getCfg().getPrefix() + Util.color("&cInvalid usage. Correct usage: /level withdraw <beacon:sponge> <amount>"));
-                return false;
-            }
-
             if (args[1].equalsIgnoreCase("beacons") || args[1].equalsIgnoreCase("beacon")) {
-
-                try {
-                    int amount = Integer.parseInt(args[2]);
-                    withdraw(player, amount, Material.BEACON);
-                } catch (NumberFormatException ex) {
-                    sender.sendMessage(CellLevel.inst.getCfg().getPrefix() + Util.color("Invalid amount!"));
-                }
-
-
+                BeaconWithdrawal.inv.open(player);
             } else if (args[1].equalsIgnoreCase("sponge") || args[1].equalsIgnoreCase("sponges")) {
-
-                try {
-                    int amount = Integer.parseInt(args[2]);
-                    withdraw(player, amount, Material.SPONGE);
-                } catch (NumberFormatException ex) {
-                    sender.sendMessage(CellLevel.inst.getCfg().getPrefix() + Util.color("Invalid amount!"));
-                }
-
+                SpongeWithdrawal.inv.open(player);
             } else {
-                sender.sendMessage(CellLevel.inst.getCfg().getPrefix() + Util.color("&cInvalid usage. Correct usage: /level withdraw <beacon:sponge> <amount>"));
+                sender.sendMessage(plugin.getCfg().getPrefix() + Util.color("&aIncorrect usage. Correct usage: /levels withdraw <beacons:sponges>"));
             }
-
         } else {
             sender.sendMessage(CellLevel.inst.getCfg().getPrefix() + Util.color("&cInvalid command!"));
         }
-
         return true;
     }
 

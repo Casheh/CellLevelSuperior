@@ -16,13 +16,13 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class WithdrawInventory implements InventoryProvider {
+public class BeaconWithdrawal implements InventoryProvider {
 
     public static final SmartInventory inv = SmartInventory.builder()
-            .id("withdrawTest")
-            .provider(new WithdrawInventory())
+            .id("beaconWithdrawal")
+            .provider(new BeaconWithdrawal())
             .size(3, 9)
-            .title(Util.color("&bWithdraw"))
+            .title(Util.color("&bWithdraw Beacons"))
             .build();
 
     @Override
@@ -72,9 +72,9 @@ public class WithdrawInventory implements InventoryProvider {
     private void setBeacon(InventoryContents inventoryContents, int amount) {
         String lore;
         if (amount == 1)
-            lore = "&oClick here to withdraw &b" + amount + "&f beacon!";
+            lore = "&oClick here to withdraw &b" + amount + "&f&o beacon!";
         else
-            lore = "&oClick here to withdraw &b" + amount + "&f beacons!";
+            lore = "&oClick here to withdraw &b" + amount + "&f&o beacons!";
         inventoryContents.set(1, 4, ClickableItem.of(new ItemBuilder(Material.BEACON).displayname("&b&lWITHDRAW").lore(" ").lore(lore).build(), e -> {
             int quantity = Util.getContainingNumber(Util.strip(e.getCurrentItem().getItemMeta().getLore().get(1)));
             withdraw((Player) e.getWhoClicked(), amount);
@@ -100,7 +100,7 @@ public class WithdrawInventory implements InventoryProvider {
             }
 
             player.closeInventory();
-            player.sendMessage(CellLevel.inst.getCfg() + Util.color("&aYou have withdrawn &b" + emptySpace + "&a beacons!"));
+            player.sendMessage(CellLevel.inst.getCfg().getPrefix() + Util.color("&aYou have withdrawn &b" + emptySpace + "&a beacons!"));
             player.getInventory().addItem(new ItemStack(Material.BEACON, emptySpace));
 
             Bukkit.getScheduler().runTaskAsynchronously(CellLevel.inst, new Runnable() {
@@ -114,7 +114,7 @@ public class WithdrawInventory implements InventoryProvider {
         }
 
         player.closeInventory();
-        player.sendMessage(CellLevel.inst.getCfg() + Util.color("&aYou have withdrawn &b" + amount + "&a beacons!"));
+        player.sendMessage(CellLevel.inst.getCfg().getPrefix() + Util.color("&aYou have withdrawn &b" + amount + "&a beacons!"));
         player.getInventory().addItem(new ItemStack(Material.BEACON, amount));
 
         Bukkit.getScheduler().runTaskAsynchronously(CellLevel.inst, new Runnable() {
@@ -125,7 +125,5 @@ public class WithdrawInventory implements InventoryProvider {
             }
         });
     }
-
-
 
 }
