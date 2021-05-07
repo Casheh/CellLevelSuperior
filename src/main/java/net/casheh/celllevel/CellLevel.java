@@ -9,6 +9,7 @@ import net.casheh.celllevel.events.ChestClickListener;
 import net.casheh.celllevel.events.InventoryListeners;
 import net.casheh.celllevel.events.IslandEvents;
 import net.casheh.celllevel.inventory.CellTopMenu;
+import net.casheh.celllevel.util.DependencyUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -37,6 +38,8 @@ public final class CellLevel extends JavaPlugin {
         config = new Config(this);
 
         updateTask = startMenuUpdateTask();
+
+        new DependencyUtils(this).loadDepends();
 
         if (database != null && database.checkConnection()) {
             getServer().getPluginManager().registerEvents(new ChestClickListener(), this);
