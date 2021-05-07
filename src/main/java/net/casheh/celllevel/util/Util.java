@@ -4,6 +4,7 @@ package net.casheh.celllevel.util;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import net.casheh.celllevel.enums.Skull;
+import net.casheh.celllevel.events.ChestClickListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -22,6 +23,10 @@ public class Util {
 
     public static String color(String str) {
         return ChatColor.translateAlternateColorCodes('&', str);
+    }
+
+    public static String strip(String str) {
+        return ChatColor.stripColor(str);
     }
 
     public static int getMaterialCount(Material material, Inventory inv) {
@@ -86,5 +91,17 @@ public class Util {
 
     public static String addCommas(int num) {
         return NumberFormat.getNumberInstance().format(num);
+    }
+
+    public static int getContainingNumber(String str) {
+        char[] chars = str.toCharArray();
+        StringBuilder builder = new StringBuilder();
+        for (char c : chars) {
+            if (Character.isDigit(c))
+                builder.append(c);
+        }
+        if (builder.toString().length() > 0)
+            return Integer.parseInt(builder.toString());
+        return 0;
     }
 }
