@@ -29,6 +29,8 @@ public final class CellLevel extends JavaPlugin {
 
     private CellTopMenu cellTop;
 
+    private InventoryManager inventoryManager;
+
     @Override
     public void onEnable() {
         saveDefaultConfig();
@@ -43,6 +45,9 @@ public final class CellLevel extends JavaPlugin {
         updateTask = startMenuUpdateTask();
 
         new DependencyUtils(this).loadDepends();
+
+        inventoryManager = new InventoryManager(this);
+        inventoryManager.init();
 
         if (database != null && database.checkConnection()) {
             getServer().getPluginManager().registerEvents(new ChestClickListener(), this);
@@ -86,5 +91,9 @@ public final class CellLevel extends JavaPlugin {
 
     public CellTopMenu getCellTop() {
         return this.cellTop;
+    }
+
+    public InventoryManager getInventoryManager() {
+        return this.inventoryManager;
     }
 }

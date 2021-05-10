@@ -1,7 +1,6 @@
 package net.casheh.celllevel.util;
 
-import com.google.common.collect.Table;
-import net.casheh.calls.CallBackAPI;
+import net.casheh.celllevel.calls.CallBackAPI;
 import net.casheh.celllevel.CellLevel;
 
 import java.io.BufferedInputStream;

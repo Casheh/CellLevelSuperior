@@ -31,6 +31,7 @@ public class BeaconWithdrawal implements InventoryProvider {
             .provider(new BeaconWithdrawal())
             .size(3, 9)
             .title(Util.color("&bWithdraw Beacons"))
+            .manager(CellLevel.inst.getInventoryManager())
             .build();
 
     @Override
@@ -119,9 +120,9 @@ public class BeaconWithdrawal implements InventoryProvider {
     private void setBeacon(InventoryContents inventoryContents, int amount) {
         String lore;
         if (amount == 1)
-            lore = "&oClick here to withdraw &b" + amount + "&f&o beacon!";
+            lore = "&o&fClick here to withdraw&b " + amount + "&f&o beacon!";
         else
-            lore = "&oClick here to withdraw &b" + amount + "&f&o beacons!";
+            lore = "&o&fClick here to withdraw&b " + amount + "&f&o beacons!";
         inventoryContents.set(1, 4, ClickableItem.of(new ItemBuilder(Material.BEACON).displayname("&b&lWITHDRAW").lore(" ").lore(lore).build(), e -> {
             int quantity = Util.getContainingNumber(Util.strip(e.getCurrentItem().getItemMeta().getLore().get(1)));
             withdraw((Player) e.getWhoClicked(), amount);
@@ -179,9 +180,9 @@ public class BeaconWithdrawal implements InventoryProvider {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(Util.color("&b&lMAX WITHDRAWAL"));
         meta.setLore(Arrays.asList(" ",
-                Util.color("&oClick here to withdraw"),
-                Util.color("&othe maximum amount of beacons"),
-                Util.color("&oyour inventory can hold!")));
+                Util.color("&o&fClick here to withdraw"),
+                Util.color("&o&fthe maximum amount of beacons"),
+                Util.color("&o&fyour inventory can hold!")));
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
         item.addUnsafeEnchantment(Enchantment.DURABILITY, 999);

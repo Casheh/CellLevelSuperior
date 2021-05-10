@@ -159,12 +159,17 @@ public class Levels implements CommandExecutor {
 
             Player player = (Player) sender;
 
+            if (args.length < 2) {
+                sender.sendMessage(plugin.getCfg().getPrefix() + Util.color("&cUsage: /levels withdraw <beacons:sponges>"));
+                return false;
+            }
+
             if (args[1].equalsIgnoreCase("beacons") || args[1].equalsIgnoreCase("beacon")) {
                 BeaconWithdrawal.inv.open(player);
             } else if (args[1].equalsIgnoreCase("sponge") || args[1].equalsIgnoreCase("sponges")) {
                 SpongeWithdrawal.inv.open(player);
             } else {
-                sender.sendMessage(plugin.getCfg().getPrefix() + Util.color("&aIncorrect usage. Correct usage: /levels withdraw <beacons:sponges>"));
+                sender.sendMessage(plugin.getCfg().getPrefix() + Util.color("&cUsage: /levels withdraw <beacons:sponges>"));
             }
         } else {
             sender.sendMessage(CellLevel.inst.getCfg().getPrefix() + Util.color("&cInvalid command!"));
