@@ -181,6 +181,7 @@ public class BeaconWithdrawal implements InventoryProvider {
         meta.setDisplayName(Util.color("&b&lMAX WITHDRAWAL"));
         meta.setLore(Arrays.asList(" ",
                 Util.color("&o&fClick here to withdraw"),
+                Util.color(" "),                   
                 Util.color("&o&fthe maximum amount of beacons"),
                 Util.color("&o&fyour inventory can hold!")));
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
